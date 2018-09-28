@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import {
-  compose,
-  withState,
-  withHandlers,
-} from 'recompose'
+import PropTypes from 'prop-types'
+import { compose, withState, withHandlers } from 'recompose'
 import {
   Input,
   Button,
@@ -34,6 +31,13 @@ class TweetComposer extends Component {
   }
 }
 
+TweetComposer.propTypes = {
+  msg: PropTypes.string.isRequired,
+  updateMsg: PropTypes.func.isRequired,
+  submitMsg: PropTypes.func.isRequired,
+  onTweet: PropTypes.func.isRequired,
+}
+
 export default compose(
   withState('msg', 'updateMsg', ''),
   withHandlers({
@@ -41,8 +45,14 @@ export default compose(
       ev.preventDefault()
       updateMsg('')
       if (msg) {
-        utils.splitMessage(msg)
-        addTweet({ msg })
+        if (msg.length <= 50) return addTweet({ message: [msg] })
+        try {
+          const msgs = utils.splitMessage(msg, 50)
+          const message = msgs.map(m => [m.indicator].concat(m.words).join(' '))
+          addTweet({ message })
+        } catch (e) {
+          alert('Invalid tweet')
+        }
       }
     },
   }),

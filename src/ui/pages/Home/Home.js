@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Container } from 'reactstrap'
 import { compose, withState, withHandlers } from 'recompose'
-import { TweetComposer, Tweet } from '../../components'
+import { TweetComposer, Tweets } from '../../components'
 import './Home.css'
 
 class Home extends Component {
@@ -10,14 +11,15 @@ class Home extends Component {
     return (
       <Container id='home'>
         <TweetComposer onTweet={addTweet}/>
-        <div className='tweet-list'>
-          {
-            tweets.map((tweet, index) => <Tweet key={index} data={tweet}/>)
-          }
-        </div>
+        <Tweets data={tweets}/>
       </Container>
     )
   }
+}
+
+Home.propTypes = {
+  tweets: PropTypes.array.isRequired,
+  addTweet: PropTypes.func.isRequired,
 }
 
 export default compose(

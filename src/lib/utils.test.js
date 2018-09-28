@@ -3,8 +3,9 @@ import utils from './utils'
 
 const rng = seedrandom('zalora')
 it('simple-split', () => {
+  const MSG_SIZE = 50
   const msg = 'I can\'t believe Tweeter now supports chunking my messages, so I don\'t have to do it myself.'
-  const values = utils.splitMessage(msg)
+  const values = utils.splitMessage(msg, MSG_SIZE)
   const tweets = ['1/2 I can\'t believe Tweeter now supports chunking', '2/2 my messages, so I don\'t have to do it myself.']
   tweets.forEach((tweet, index) => {
     const { words, indicator } = values[index]
@@ -13,14 +14,16 @@ it('simple-split', () => {
 })
 
 it('spaces-split', () => {
-  const msg = 'I love  you    so   much'
-  const values = utils.splitMessage(msg)
+  const MSG_SIZE = 50
+  const msg = 'I love  you    so   much    '
+  const values = utils.splitMessage(msg, MSG_SIZE)
   expect(values[0].sum).toEqual(22)
   expect(values[0].words).toEqual(['I', 'love', 'you', 'so', 'much'])
 })
 
 it('complex-split', () => {
   const WORD_SIZE = 50
+  const MSG_SIZE = 50
   const dictionary = []
   let char = ''
   let msg = ''
@@ -32,7 +35,7 @@ it('complex-split', () => {
   for (let i = 0; i < 1000; i += 1) {
     msg += ` ${dictionary[rand(WORD_SIZE - 20)]}`
   }
-  const values = utils.splitMessage(msg)
+  const values = utils.splitMessage(msg, MSG_SIZE)
   values.forEach(({ words, sum, indicator }) => {
     const wordsLen = words.reduce((r, n) => r + n.length, 0)
     const msgLen = wordsLen + indicator.length + words.length
@@ -43,7 +46,7 @@ it('complex-split', () => {
     msg += ` ${dictionary[rand(WORD_SIZE - 1)]}`
   }
   try {
-    utils.splitMessage(msg)
+    utils.splitMessage(msg, MSG_SIZE)
     expect(false).toEqual(true)
   } catch (e) {
     expect(e.message).toEqual('No answer')

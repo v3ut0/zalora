@@ -1,7 +1,5 @@
-const MAX_SIZE = 50
-
 const utils = {
-  splitMessage: (msg) => {
+  splitMessage: (msg, msgSize) => {
     const words = []
     let startAt = 0
     // split message into words
@@ -22,7 +20,7 @@ const utils = {
       }
       // add word to elem
       const elem = elems[index]
-      while (words[0] && elem.sum + words[0].length + 1 <= MAX_SIZE) {
+      while (words[0] && elem.sum + words[0].length + 1 <= msgSize) {
         elem.sum += words[0].length + 1
         elem.words.push(words.shift())
       }
@@ -33,7 +31,7 @@ const utils = {
         curElem.indicator = `${i + 1}/${elems.length}`
         curElem.sum += curElem.indicator.length - prevIndicatorLen
         const nextElem = elems[i + 1]
-        while (curElem.sum > MAX_SIZE) {
+        while (curElem.sum > msgSize) {
           const word = curElem.words.pop()
           curElem.sum -= (word.length + 1)
           if (nextElem) {
@@ -49,7 +47,7 @@ const utils = {
       }
       const lastElem = elems[elems.length - 1]
       // dont have word or elem's len does not satisfy constraint
-      if (words[0] && lastElem.sum + words[0].length + 1 <= MAX_SIZE) continue
+      if (words[0] && lastElem.sum + words[0].length + 1 <= msgSize) continue
       index += 1
     }
     return elems
