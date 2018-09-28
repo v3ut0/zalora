@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import { compose, withState, withHandlers } from 'recompose'
+import {
+  compose,
+  withState,
+  withHandlers,
+} from 'recompose'
 import {
   Input,
   Button,
   Form,
   FormGroup,
 } from 'reactstrap'
+import { utils } from '../../../lib'
 
 class TweetComposer extends Component {
   render() {
@@ -35,7 +40,10 @@ export default compose(
     submitMsg: ({ updateMsg, msg, onTweet: addTweet }) => (ev) => {
       ev.preventDefault()
       updateMsg('')
-      msg && addTweet({ msg })
+      if (msg) {
+        utils.splitMessage(msg)
+        addTweet({ msg })
+      }
     },
   }),
 )(TweetComposer)
