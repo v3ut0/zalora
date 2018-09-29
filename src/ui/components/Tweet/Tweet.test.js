@@ -1,3 +1,11 @@
+import React from 'react'
+import { shallow } from 'enzyme'
+import Tweet from './Tweet'
+
 it('Tweet', () => {
-  expect(1).toEqual(1)
+  const data = {
+    message: ['hello', 'world'],
+  }
+  const wrapper = shallow(<Tweet data={data}/>)
+  expect(wrapper.find('p').length).toEqual(2)
 })

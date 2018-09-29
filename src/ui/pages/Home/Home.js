@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Container } from 'reactstrap'
-import { compose, withState, withHandlers } from 'recompose'
 import { TweetComposer, Tweets } from '../../components'
 import './Home.css'
 
@@ -22,11 +21,4 @@ Home.propTypes = {
   addTweet: PropTypes.func.isRequired,
 }
 
-export default compose(
-  withState('tweets', 'updateTweets', []),
-  withHandlers({
-    addTweet: ({ updateTweets, tweets }) => (tweet) => {
-      updateTweets([tweet].concat(tweets))
-    },
-  }),
-)(Home)
+export default Home

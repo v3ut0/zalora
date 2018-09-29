@@ -1,6 +1,6 @@
-import TweetComposer from './TweetComposer/TweetComposer'
-import Tweet from './Tweet/Tweet'
-import Tweets from './Tweets/Tweets'
+import TweetComposer from './TweetComposer'
+import Tweet from './Tweet'
+import Tweets from './Tweets'
 
 export {
   TweetComposer,
