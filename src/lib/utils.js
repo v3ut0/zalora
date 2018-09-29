@@ -1,5 +1,23 @@
 const utils = {
+  splitMessage1: () => {
+    /*  complexity: O(n * log(n)/log(10))
+     *  Step1: detect min number of msg chuck then get min size of indicator
+     *  Step2: while increase size of indicator try to separate message to chunks
+     *  Step3: stop if found anwser or no anwser
+     * */
+  },
+  splitMessage2: () => {
+    /* complexity: O(n^2)
+     * Step1: split message to chunks with dump indicators
+     * Step2: try to fix indicator and shift words
+      * */
+  },
   splitMessage: (msg, msgSize) => {
+    /*
+     * complexity: O(n^2)
+     * while split message to chunks with dump indicators,
+     * try to fix indicator and shift words
+      * */
     const words = []
     let startAt = 0
     // split message into words
@@ -13,7 +31,7 @@ const utils = {
     const elems = []
     let index = 0
     while (words.length > 0) {
-      // add new elem
+      // create new elem
       if (!elems[index]) {
         const indicator = `${index + 1}/${index + 1}`
         elems[index] = { words: [], sum: indicator.length, indicator }
